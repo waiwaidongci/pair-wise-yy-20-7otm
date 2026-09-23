@@ -32,6 +32,10 @@ function save() {
   localStorage.setItem(storageKey, JSON.stringify(state));
 }
 
+function emitScoreChange(reason) {
+  window.dispatchEvent(new CustomEvent("luogu:score-change", { detail: { reason } }));
+}
+
 function syncFields() {
   pieceName.value = state.pieceName;
   bpmInput.value = state.bpm;
@@ -102,6 +106,8 @@ function playSound(instrument) {
   osc.stop(audioContext.currentTime + 0.09);
 }
 
+window.luoguPlaySound = playSound;
+
 function highlight(step) {
   document.querySelectorAll(".cell.playing").forEach((cell) => cell.classList.remove("playing"));
   document.querySelectorAll(`[data-step="${step}"]`).forEach((cell) => cell.classList.add("playing"));
@@ -131,6 +137,7 @@ grid.addEventListener("click", (event) => {
   state.pattern[row][step] = state.pattern[row][step] ? "" : instruments[row].token;
   save();
   render();
+  emitScoreChange("pattern");
 });
 
 pieceName.addEventListener("input", () => {
@@ -141,6 +148,7 @@ pieceName.addEventListener("input", () => {
 bpmInput.addEventListener("input", () => {
   state.bpm = Number(bpmInput.value || 96);
   save();
+  emitScoreChange("bpm");
   if (timer) {
     clearInterval(timer);
     timer = setInterval(tick, 60000 / state.bpm);
@@ -151,6 +159,7 @@ loopSelect.addEventListener("change", () => {
   state.loop = loopSelect.value;
   playhead = currentRange()[0];
   save();
+  emitScoreChange("loop");
 });
 
 noteInput.addEventListener("keydown", (event) => {
@@ -199,6 +208,7 @@ savedList.addEventListener("click", (event) => {
   state.pattern = item.pattern.map((row) => [...row]);
   save();
   render();
+  emitScoreChange("load");
 });
 
 render();

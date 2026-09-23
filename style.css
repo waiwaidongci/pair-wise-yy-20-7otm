@@ -217,9 +217,174 @@ select {
   font-size: 14px;
 }
 
+.training {
+  display: grid;
+  grid-template-columns: minmax(360px, 1fr) minmax(320px, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.train-panel,
+.records-panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgb(255 250 242 / 94%);
+  box-shadow: 0 18px 42px rgb(83 57 29 / 10%);
+  padding: 16px;
+}
+
+.train-scope,
+.records-summary {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 8px 0 12px;
+}
+
+.train-status {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.train-status.error {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.quiz {
+  border-top: 1px solid #eadcc9;
+  margin-top: 12px;
+  padding-top: 12px;
+}
+
+.quiz-pos {
+  margin: 0 0 6px;
+  font-weight: 800;
+}
+
+.quiz-progress,
+.quiz-tip {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.quiz-tip {
+  margin: 0 0 12px;
+}
+
+.replay-btn,
+.next-btn {
+  background: var(--active);
+  margin-bottom: 12px;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.option-btn {
+  background: white;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.option-btn.right {
+  background: #d9efea;
+  border-color: var(--active);
+  color: var(--active);
+  font-weight: 800;
+}
+
+.option-btn.wrong {
+  background: #f6d8d8;
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.quiz-feedback {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.quiz-feedback.ok {
+  color: var(--active);
+  font-weight: 700;
+}
+
+.quiz-feedback.bad {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.records-list {
+  display: grid;
+  gap: 8px;
+  max-height: 420px;
+  overflow: auto;
+}
+
+.record-item {
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--line);
+  border-radius: 6px;
+  background: white;
+  padding: 8px 10px;
+}
+
+.record-item.ok {
+  border-left-color: var(--active);
+}
+
+.record-item.bad {
+  border-left-color: var(--accent);
+}
+
+.record-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.record-verdict {
+  font-weight: 800;
+}
+
+.record-item.ok .record-verdict {
+  color: var(--active);
+}
+
+.record-item.bad .record-verdict {
+  color: var(--accent);
+}
+
+.record-item p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.record-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
 @media (max-width: 1160px) {
   .stage,
-  .controls {
+  .controls,
+  .training {
     grid-template-columns: 1fr;
   }
 }
