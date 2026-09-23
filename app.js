@@ -32,6 +32,12 @@ function save() {
   localStorage.setItem(storageKey, JSON.stringify(state));
 }
 
+// 通知听辨训练：谱面、速度或循环被改动，训练中的本轮应中断。
+// 答题记录由训练记录层单独保存，不随本次中断清除。
+function emitScoreChange(type) {
+  window.dispatchEvent(new CustomEvent(type));
+}
+
 function syncFields() {
   pieceName.value = state.pieceName;
   bpmInput.value = state.bpm;
@@ -131,6 +137,7 @@ grid.addEventListener("click", (event) => {
   state.pattern[row][step] = state.pattern[row][step] ? "" : instruments[row].token;
   save();
   render();
+  emitScoreChange("score:changed");
 });
 
 pieceName.addEventListener("input", () => {
@@ -141,6 +148,7 @@ pieceName.addEventListener("input", () => {
 bpmInput.addEventListener("input", () => {
   state.bpm = Number(bpmInput.value || 96);
   save();
+  emitScoreChange("bpm:changed");
   if (timer) {
     clearInterval(timer);
     timer = setInterval(tick, 60000 / state.bpm);
@@ -151,6 +159,7 @@ loopSelect.addEventListener("change", () => {
   state.loop = loopSelect.value;
   playhead = currentRange()[0];
   save();
+  emitScoreChange("loop:changed");
 });
 
 noteInput.addEventListener("keydown", (event) => {
@@ -199,6 +208,9 @@ savedList.addEventListener("click", (event) => {
   state.pattern = item.pattern.map((row) => [...row]);
   save();
   render();
+  emitScoreChange("score:changed");
 });
 
+// 保证训练模块首次开始时能从存储读到当前谱面快照
+save();
 render();

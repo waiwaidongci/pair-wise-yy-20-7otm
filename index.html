@@ -50,7 +50,29 @@
         <div id="notesList"></div>
       </aside>
     </section>
+
+    <section class="training">
+      <div class="training-head">
+        <div>
+          <p class="eyebrow">Ear Training</p>
+          <h2>口令听辨训练</h2>
+        </div>
+        <button id="trainStartBtn" type="button">开始抽查</button>
+      </div>
+      <p id="trainMessage" class="training-message" hidden></p>
+      <div id="trainBody" class="training-body idle"></div>
+      <div class="training-records">
+        <div class="records-head">
+          <h3>训练记录</h3>
+          <span id="trainStats" class="records-stats"></span>
+        </div>
+        <div id="trainRecordList" class="record-list"></div>
+      </div>
+    </section>
   </main>
   <script src="./app.js"></script>
+  <script src="./training-rules.js"></script>
+  <script src="./training-store.js"></script>
+  <script src="./training-page.js"></script>
 </body>
 </html>
